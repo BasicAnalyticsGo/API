@@ -19,4 +19,10 @@ func ConnectDatabase() {
 
 	err = database.AutoMigrate(&Session{})
 
+	if err != nil {
+		return
+	}
+
+	DB = database
+
 }
