@@ -4,14 +4,22 @@ import (
 	"gorm.io/driver/mysql"
 	_ "gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"log"
+	"os"
 )
 
 var DB *gorm.DB
 
 func ConnectDatabase() {
 
-	dsn := "root:@tcp(127.0.0.1:3306)/analytics?charset=utf8mb4&parseTime=True&loc=Local"
-	database, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	dbConnectionString := os.Getenv("DB_CONNECTION_STRING")
+
+	if dbConnectionString == "" {
+		log.Fatal("'DB_CONNECTION_STRING' environment variable is not defined.")
+	}
+
+	log.Println(dbConnectionString)
+	database, err := gorm.Open(mysql.Open(dbConnectionString), &gorm.Config{})
 
 	if err != nil {
 		panic("Database connection failed.")

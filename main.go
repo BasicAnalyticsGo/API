@@ -4,6 +4,7 @@ import (
 	"basicanalyticsgo/api/controllers"
 	"basicanalyticsgo/api/models"
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 func main() {
@@ -15,5 +16,11 @@ func main() {
 	router.GET("/sessions", controllers.GetAllSessions)
 	router.POST("/sessions", controllers.CreateSession)
 
-	router.Run("localhost:8080")
+	err := router.Run(":8080")
+
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
 }
